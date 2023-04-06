@@ -1,4 +1,4 @@
-import { login } from "@/api";
+import { login } from "@/apis";
 import "./Login.scss";
 
 import { FormEvent, ReactNode, useRef, useState } from "react";
@@ -17,6 +17,7 @@ import {
 
 type AlertLoginProps = {
     children: ReactNode;
+    message: string;
 };
 
 export function Login() {
@@ -24,6 +25,7 @@ export function Login() {
 
     const [showSpinner, setShowSpinner] = useState(false);
     const [showError, setShowError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
@@ -38,16 +40,16 @@ export function Login() {
             const password = passwordRef.current!.value;
 
             setShowSpinner(true);
+            setShowError(false);
 
             login(email, password)
                 .then(({ accessToken }) => {
-                    console.log(accessToken);
                     localStorage.setItem("accessToken", accessToken);
                     navigate("/");
                 })
-                .catch((err) => {
-                    console.log(err);
+                .catch(({ message }) => {
                     setShowError(true);
+                    setErrorMessage(message);
                 })
                 .finally(() => {
                     setShowSpinner(false);
@@ -112,6 +114,7 @@ export function Login() {
                 enforceFocus={false}
                 onHide={() => setShowError(false)}
             >
+                <span>{errorMessage}</span>
                 <CloseButton onClick={() => setShowError(false)} />
             </Modal>
         </div>
@@ -120,9 +123,12 @@ export function Login() {
 
 function AlertLogin({ children }: AlertLoginProps) {
     return (
-        <Alert className="pe-auto alert-dismissible my-3 mx-5" variant={"danger"}>
+        <Alert
+            className="pe-auto alert-dismissible my-3 mx-5"
+            variant={"danger"}
+        >
+            <span className="fw-bold">Error: </span>
             {children}
-            <span className="fw-bold">Error: </span>Logging Failed
         </Alert>
     );
 }
