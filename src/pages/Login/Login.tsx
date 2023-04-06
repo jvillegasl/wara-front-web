@@ -22,7 +22,6 @@ type AlertLoginProps = {
 export function Login() {
     const navigate = useNavigate();
 
-    const [isValidated, setIsValidated] = useState(false);
     const [showSpinner, setShowSpinner] = useState(false);
     const [showError, setShowError] = useState(false);
 
@@ -32,9 +31,7 @@ export function Login() {
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        const form = event?.target as HTMLFormElement;
-
-        if (!form) return;
+        const form = e.target as HTMLFormElement;
 
         if (form.checkValidity() === true) {
             const email = emailRef.current!.value;
@@ -53,12 +50,9 @@ export function Login() {
                     setShowError(true);
                 })
                 .finally(() => {
-                    setIsValidated(false);
                     setShowSpinner(false);
                 });
         }
-
-        setIsValidated(true);
     }
 
     return (
@@ -68,11 +62,7 @@ export function Login() {
                 style={{ height: "fit-content", maxWidth: "480px" }}
             >
                 <Card.Body>
-                    <Form
-                        noValidate
-                        validated={isValidated}
-                        onSubmit={handleSubmit}
-                    >
+                    <Form onSubmit={handleSubmit}>
                         <Form.Group className="mb-3">
                             <Form.Label>Email address</Form.Label>
                             <Form.Control
@@ -113,7 +103,15 @@ export function Login() {
                 </Card.Body>
             </Card>
 
-            <Modal show={showError} dialogAs={AlertLogin} backdrop={false}>
+            <Modal
+                className="pe-none"
+                show={showError}
+                dialogAs={AlertLogin}
+                backdrop={false}
+                autoFocus={false}
+                enforceFocus={false}
+                onHide={() => setShowError(false)}
+            >
                 <CloseButton onClick={() => setShowError(false)} />
             </Modal>
         </div>
@@ -122,7 +120,7 @@ export function Login() {
 
 function AlertLogin({ children }: AlertLoginProps) {
     return (
-        <Alert className="alert-dismissible my-3 mx-5" variant={"danger"}>
+        <Alert className="pe-auto alert-dismissible my-3 mx-5" variant={"danger"}>
             {children}
             <span className="fw-bold">Error: </span>Logging Failed
         </Alert>
