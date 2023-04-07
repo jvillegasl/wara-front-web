@@ -55,7 +55,7 @@ export function EmployeesTable({
     }
 
     return (
-        <Table>
+        <Table className="mx-auto" style={{ maxWidth: "1440px" }}>
             <thead>
                 <tr>
                     <th>Id</th>
