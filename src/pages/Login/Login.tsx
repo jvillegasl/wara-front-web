@@ -1,5 +1,4 @@
 import { login } from "@/apis";
-import "./Login.scss";
 
 import { FormEvent, ReactNode, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -43,8 +42,8 @@ export function Login() {
             setShowError(false);
 
             login(email, password)
-                .then(({ accessToken }) => {
-                    localStorage.setItem("accessToken", accessToken);
+                .then(({ access_token }) => {
+                    localStorage.setItem("accessToken", access_token);
                     navigate("/");
                 })
                 .catch(({ message }) => {
