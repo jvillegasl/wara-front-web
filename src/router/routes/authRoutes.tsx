@@ -1,6 +1,6 @@
 import { RouteObject } from "react-router-dom";
 import { GuardedRoute } from "../GuardedRoute";
-import { Home } from "@/pages";
+import { Home, New } from "@/pages";
 import { isAuthenticated } from "@/utils";
 
 export const authRoutes: RouteObject = {
@@ -9,6 +9,10 @@ export const authRoutes: RouteObject = {
         {
             path: "/",
             element: <Home />,
+        },
+        {
+            path: "/new",
+            element: <New />,
         },
     ],
 };
