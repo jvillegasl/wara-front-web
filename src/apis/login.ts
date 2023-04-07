@@ -34,26 +34,3 @@ export async function login(
         throw new Error(err.message);
     }
 }
-
-function mockedLogin(
-    email: string,
-    password: string
-): Promise<{ accessToken: string }> {
-    const randomTimeout = Math.floor(Math.random() * 2000) + 1000;
-
-    return new Promise((resolve, reject) => {
-        const randomNum = Math.random();
-
-        setTimeout(() => {
-            if (randomNum < 0.5) {
-                reject(new Error("Login failed"));
-            }
-
-            if (email !== "foo@example.com" || password !== "password") {
-                reject(new Error("Invalid email or password"));
-            }
-
-            resolve({ accessToken: "mock-jwt" });
-        }, randomTimeout);
-    });
-}
