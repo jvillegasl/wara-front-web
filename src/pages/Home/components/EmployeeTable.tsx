@@ -4,21 +4,21 @@ import { FaPencilAlt as Edit, FaTrashAlt as Delete } from "react-icons/fa";
 
 type EmployeesTableProps = {
     employees: Employee[];
-    onEditClick: (id: string) => void;
-    onDeleteClick: (id: string) => void;
+    onEditButtonClick: (id: string) => void;
+    onDeleteButtonClick: (id: string) => void;
 };
 
 export function EmployeesTable({
     employees,
-    onEditClick,
-    onDeleteClick,
+    onEditButtonClick,
+    onDeleteButtonClick,
 }: EmployeesTableProps) {
-    function handleEditClick(id: string) {
-        return () => onEditClick(id);
+    function handleEditButtonClick(id: string) {
+        return () => onEditButtonClick(id);
     }
 
-    function handleDeleteClick(id: string) {
-        return () => onDeleteClick(id);
+    function handleDeleteButtonClick(id: string) {
+        return () => onDeleteButtonClick(id);
     }
 
     function renderRows() {
@@ -36,14 +36,14 @@ export function EmployeesTable({
                             <Button
                                 className="p-2 d-inline-flex align-items-center"
                                 variant="outline-primary"
-                                onClick={handleEditClick(employee.id)}
+                                onClick={handleEditButtonClick(employee.id)}
                             >
                                 <Edit />
                             </Button>
                             <Button
                                 className="p-2 d-inline-flex align-items-center"
                                 variant="outline-danger"
-                                onClick={handleDeleteClick(employee.id)}
+                                onClick={handleDeleteButtonClick(employee.id)}
                             >
                                 <Delete />
                             </Button>

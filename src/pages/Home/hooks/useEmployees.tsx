@@ -1,4 +1,9 @@
-import { deleteEmployee, fetchEmployees, updateEmployee } from "@/apis";
+import {
+    deleteEmployee,
+    fetchEmployees,
+    newEmployee,
+    updateEmployee,
+} from "@/apis";
 import { Employee } from "@/types";
 import { useEffect, useState } from "react";
 
@@ -40,6 +45,12 @@ export function useEmployees() {
                     (employee) => employee.id !== employeeId
                 );
             });
+        });
+    }
+
+    async function onNew(employee: Employee) {
+        return newEmployee(employee).then((employee) => {
+            setEmployees((prevEmployees) => [...prevEmployees, employee]);
         });
     }
 
