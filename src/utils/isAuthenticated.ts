@@ -1,5 +1,7 @@
-export function isAuthenticated() {
-    const accessToken = localStorage.getItem("accessToken");
+import { getToken } from "./getToken";
 
-    return !!accessToken;
+export function isAuthenticated() {
+    const token = getToken();
+
+    return !!token;
 }
